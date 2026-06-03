@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Env
+.env
+
+# Confidential — never commit real policies, filled HECVATs, or the vector store
+knowledge_base/*
+!knowledge_base/.gitkeep
+chroma/
+*.filled.xlsx
+*_filled.xlsx
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml

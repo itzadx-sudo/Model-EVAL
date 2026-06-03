@@ -1,0 +1,39 @@
+# HECVAT 4.1.3 parsing profile — column mappings, sheets, skip list.
+# The parser reads these values; nothing is hardcoded in Python.
+version: "4.1.3"
+
+primary_sheet: "Organization"
+all_sheets:
+  - "Organization"
+  - "Product"
+  - "Infrastructure"
+  - "IT Accessibility"
+  - "Case-Specific"
+  - "AI"
+  - "Privacy"
+
+# 0-indexed columns within each sheet row.
+question_id_col: 0      # column A — question id, e.g. DOCU-01
+question_text_col: 1    # column B — question text
+vendor_answer_col: 2    # column C — vendor's answer
+additional_info_col: 3  # column D — additional information
+
+# Data in the Organization sheet starts around row 13 (1-indexed). The parser
+# does not rely on this — it detects question rows by id pattern — but it is
+# kept here for reference and Lite-sheet tuning.
+header_row: 12
+
+# Skip by question-id PREFIX. Every item whose prefix is listed here is dropped
+# before any LLM call (US-specific legislation not applicable to Murdoch AU).
+skip_sections:
+  - "HIPA"    # HIPAA — US health data law
+  - "PCID"    # PCI-DSS — payment card (separate Murdoch process)
+  - "PRGN"    # FERPA/COPPA — US student records law
+  - "INTL"    # GDPR — EU; Murdoch AU has a separate process
+  - "CONS"    # Consulting-specific (only for consulting engagements)
+
+# Section divider rows: in the HECVAT, section headers start col A with a space
+# (e.g. " Documentation"). The parser uses this marker to track the current
+# section name while walking rows.
+section_headers:
+  marker: " "
